@@ -4,10 +4,10 @@
 #include "jaspResults.h"
 #include <chrono>
 
-#if defined(_WIN32) && defined(BUILDING_JASP)
-#include "lib_json/json_value.cpp" //hacky way to get libjson in the code ^^
-#include "lib_json/json_reader.cpp"
-#include "lib_json/json_writer.cpp"
+#if defined(_WIN32) || !defined(BUILDING_JASP)
+#include "jsoncpp/src/lib_json/json_value.cpp" //hacky way to get libjson in the code ^^
+#include "jsoncpp/src/lib_json/json_reader.cpp"
+#include "jsoncpp/src/lib_json/json_writer.cpp"
 #endif
 
 jaspObjectType jaspObjectTypeStringToObjectType(std::string type)
