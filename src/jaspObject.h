@@ -10,7 +10,7 @@
 extern void			jaspRCPP_logString(		const std::string  & code);
 extern std::string	jaspRCPP_nativeToUtf8(	const Rcpp::String & in);
 #else
-#include "lib_json/json.h"
+#include "json/json.h"
 #endif
 
 void		jaspPrint(			std::string msg);
