@@ -9,7 +9,7 @@
 // #include "lib_json/json_reader.cpp"
 // #include "lib_json/json_writer.cpp"
 // #endif
-#include <json/json.cpp>
+#include <json/json.h>
 
 jaspObjectType jaspObjectTypeStringToObjectType(std::string type)
 {
