@@ -198,13 +198,16 @@ void jaspResults::saveResults()
 
 	Json::Value json = convertToJSON();
 
-    JSONCPP_STRING          err;
-    Json::StreamWriterBuilder jsonWriterBuilder;
-    jsonWriterBuilder["indentation"] = '\t';
-    std::unique_ptr<Json::StreamWriter> const jsonWriter(jsonWriterBuilder.newStreamWriter());
+    // JSONCPP_STRING          err;
+    // Json::StreamWriterBuilder jsonWriterBuilder;
+    // jsonWriterBuilder["indentation"] = '\t';
+    // std::unique_ptr<Json::StreamWriter> const jsonWriter(jsonWriterBuilder.newStreamWriter());
 
     // TODO: I think this can be done better, probably using the writer to write it to the file
-	saveHere << jsonWriter->write(json, &std::cout);
+	// saveHere << jsonWriter->write(json, &std::cout);
+ 
+ 	Json::StyledWriter styledWriter;
+	saveHere << styledWriter.write(json);
 
 	saveHere.close();
 
@@ -224,15 +227,16 @@ void jaspResults::loadResults()
 	if(!loadThis.is_open()) return;
 
     // TODO: Check this, this is werid. I'm not sure if I read the file correctly
-    std::stringstream resultsContents;
-    resultsContents << loadThis.rdbuf();
+    // std::stringstream resultsContents;
+    // resultsContents << loadThis.rdbuf();
 
 	Json::Value val;
+	Json::Reader().parse(loadThis, val);
 
-    JSONCPP_STRING          err;
-    Json::CharReaderBuilder jsonReaderBuilder;
-    std::unique_ptr<Json::CharReader> const jsonReader(jsonReaderBuilder.newCharReader());
-	jsonReader->parse(resultsContents.str().c_str(), resultsContents.str().c_str() + resultsContents.str().length(), &val, &err);
+    // JSONCPP_STRING          err;
+    // Json::CharReaderBuilder jsonReaderBuilder;
+    // std::unique_ptr<Json::CharReader> const jsonReader(jsonReaderBuilder.newCharReader());
+	// jsonReader->parse(resultsContents.str().c_str(), resultsContents.str().c_str() + resultsContents.str().length(), &val, &err);
 
 	loadThis.close();
 
@@ -257,11 +261,13 @@ void jaspResults::changeOptions(std::string opts)
 
 void jaspResults::setOptions(std::string opts)
 {
-    JSONCPP_STRING          err;
-    Json::CharReaderBuilder jsonReaderBuilder;
-    std::unique_ptr<Json::CharReader> const jsonReader(jsonReaderBuilder.newCharReader());
+    // JSONCPP_STRING          err;
+    // Json::CharReaderBuilder jsonReaderBuilder;
+    // std::unique_ptr<Json::CharReader> const jsonReader(jsonReaderBuilder.newCharReader());
 
-	jsonReader->parse(opts.c_str(), opts.c_str() + opts.length(), &_currentOptions, &err);
+	// jsonReader->parse(opts.c_str(), opts.c_str() + opts.length(), &_currentOptions, &err);
+
+	Json::Reader().parse(opts, _currentOptions);
 	jaspObject::currentOptions = _currentOptions;
 
 	if(_previousOptions != Json::nullValue)
