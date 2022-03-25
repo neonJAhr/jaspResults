@@ -2,11 +2,17 @@
 #include <fstream>
 #include <cmath>
 
+#ifdef BUILDING_JASP
 #include <boost/nowide/fstream.hpp>
 #include <boost/nowide/cstdio.hpp>
 
 typedef boost::nowide::ofstream bofstream; //Use this to work around problems on Windows with utf8 conversion
 typedef boost::nowide::ifstream bifstream;
+#else
+typedef std::ofstream bofstream;
+typedef std::ifstream bifstream;
+#endif
+
 
 sendFuncDef			jaspResults::_ipccSendFunc		= nullptr;
 pollMessagesFuncDef jaspResults::_ipccPollFunc		= nullptr;
@@ -127,7 +133,7 @@ std::string jaspResults::getStatus()
 void jaspResults::prepareForWriting()
 {
 	//Remove the seal if it is there or not doesnt matter
-	boost::nowide::remove((_writeSealRoot + _writeSealRelative).c_str());
+	std::remove((_writeSealRoot + _writeSealRelative).c_str());
 }
 
 void jaspResults::finishWriting()
