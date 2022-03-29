@@ -5,12 +5,13 @@
 #ifdef BUILDING_JASP
 #include <boost/nowide/fstream.hpp>
 #include <boost/nowide/cstdio.hpp>
-
 typedef boost::nowide::ofstream bofstream; //Use this to work around problems on Windows with utf8 conversion
 typedef boost::nowide::ifstream bifstream;
+typedef boost::nowide::remove bremove;
 #else
 typedef std::ofstream bofstream;
 typedef std::ifstream bifstream;
+typedef std::remove bremove;
 #endif
 
 
@@ -133,7 +134,7 @@ std::string jaspResults::getStatus()
 void jaspResults::prepareForWriting()
 {
 	//Remove the seal if it is there or not doesnt matter
-	std::remove((_writeSealRoot + _writeSealRelative).c_str());
+	bremove((_writeSealRoot + _writeSealRelative).c_str());
 }
 
 void jaspResults::finishWriting()
