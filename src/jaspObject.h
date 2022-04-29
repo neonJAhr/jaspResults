@@ -22,7 +22,7 @@ std::string jaspNativeToUtf8(const Rcpp::RObject & in);
 
 #define JASPOBJECT_DEFAULT_POSITION 9999
 
-DECLARE_ENUM(jaspObjectType, unknown, container, table, plot, list, results, html, state, column, qmlSource);
+DECLARE_ENUM(jaspObjectType, unknown, container, table, plot, list, results, html, state, column, qmlSource, report);
 DECLARE_ENUM(jaspColumnType, unknown, scale, ordinal, nominal, nominalText); //can be merged with columnType from CentralDatasetModel branch later on?
 
 jaspObjectType jaspObjectTypeStringToObjectType(std::string type);
@@ -47,8 +47,8 @@ public:
 	virtual	std::string dataToString(std::string)				const { return ""; }
 			std::string toString(std::string prefix = "")		const;
 
-	virtual std::string toHtml() { return ""; }
-			std::string htmlTitle() { return "<h2>" + _title + "</h2>"; }
+	virtual std::string toHtml()	const { return ""; }
+			std::string htmlTitle() const { return "<h2>" + _title + "</h2>"; }
 
 			std::string type() { return jaspObjectTypeToString(_type); }
 
